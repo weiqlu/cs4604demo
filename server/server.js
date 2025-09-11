@@ -44,9 +44,9 @@ app.post("/api/setup", async (req, res) => {
     // IF NOT EXISTS prevents errors if table already exists
     await connection.execute(`
       CREATE TABLE IF NOT EXISTS users (
-        id INT AUTO_INCREMENT PRIMARY KEY,  -- auto-incrementing ID
-        email VARCHAR(100) NOT NULL,        -- email field, required
-        password VARCHAR(100) NOT NULL      -- password field, required
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        email VARCHAR(100) NOT NULL,
+        password VARCHAR(100) NOT NULL
       )
     `);
     // close connection
