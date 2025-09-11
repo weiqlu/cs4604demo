@@ -2,6 +2,28 @@
 
 A simple demonstration of building a REST API with Node.js, Express, and MySQL using Docker for database management.
 
+## 🐳 What is Docker?
+
+**Docker** is like a "virtual computer" that runs inside your real computer. Think of it as:
+
+- **A shipping container** for software - everything needed to run a program is packaged together
+- **Consistent environment** - the same software runs exactly the same way on everyone's computer
+- **No installation headaches** - you don't need to install MySQL directly on your computer
+
+### Why use Docker for this project?
+
+**Without Docker:** You'd need to:
+1. Download and install MySQL
+2. Set up a database user and password
+3. Configure MySQL settings
+4. Deal with different versions on different computers
+
+**With Docker:** You just run:
+```bash
+docker-compose up -d
+```
+And you get a perfectly configured MySQL database! (or more)
+
 ## 📋 What You'll Learn
 
 - Setting up a Node.js web server with Express
