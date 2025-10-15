@@ -12,22 +12,68 @@ function Auth({ onAuthSuccess }: AuthProps) {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isLogin) {
-      console.log("Login attempt:", {
-        username: formData.username,
-        password: formData.password,
-      });
-      // TODO: Add login logic here
-      // For now, just simulate successful login
-      onAuthSuccess(formData.username);
-    } else {
-      console.log("Signup attempt:", formData);
-      // TODO: Add signup logic here
-      // For now, just simulate successful signup
-      onAuthSuccess(formData.username);
+    setError("");
+    setIsLoading(true);
+
+    try {
+      if (isLogin) {
+        // Login logic
+        const response = await fetch("http://localhost:3000/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: formData.username,
+            password: formData.password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Login failed");
+        }
+
+        // Login successful
+        console.log("Login successful:", data);
+        onAuthSuccess(data.username);
+      } else {
+        // Signup logic
+        const response = await fetch("http://localhost:3000/api/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Signup failed");
+        }
+
+        // Signup successful - switch to login page
+        console.log("Signup successful:", data);
+        setIsLogin(true);
+        setFormData({ username: "", email: "", password: "" });
+        setError("Account created! Please log in.");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred");
+      console.error("Auth error:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -41,12 +87,22 @@ function Auth({ onAuthSuccess }: AuthProps) {
   const toggleMode = () => {
     setIsLogin(!isLogin);
     setFormData({ username: "", email: "", password: "" });
+    setError("");
   };
+
+  const isSuccessMessage = error.includes("Account created");
 
   return (
     <div className="auth-container">
       <div className="form-container">
         <h1>{isLogin ? "Login" : "Sign Up"}</h1>
+        {error && (
+          <div
+            className={isSuccessMessage ? "success-message" : "error-message"}
+          >
+            {error}
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
@@ -86,8 +142,8 @@ function Auth({ onAuthSuccess }: AuthProps) {
             />
           </div>
 
-          <button type="submit" className="submit-btn">
-            {isLogin ? "Login" : "Sign Up"}
+          <button type="submit" className="submit-btn" disabled={isLoading}>
+            {isLoading ? "Loading..." : isLogin ? "Login" : "Sign Up"}
           </button>
         </form>
 
