@@ -135,10 +135,4 @@ app.delete("/api/users/:id", async (req, res) => {
 // start the server on port 3000
 app.listen(3000, () => {
   console.log("Server running on http://localhost:3000");
-  console.log("Available endpoints:");
-  console.log("  GET    /api/test-db     - test database connection");
-  console.log("  POST   /api/setup       - create users table");
-  console.log("  GET    /api/users       - get all users");
-  console.log("  POST   /api/users       - add new user");
-  console.log("  DELETE /api/users/:id   - delete user by ID");
 });
