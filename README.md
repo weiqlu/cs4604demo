@@ -147,17 +147,6 @@ CREATE TABLE tasks (
 - Indexes on user_id and completed for query optimization
 - Timestamps track creation and modification times
 
-## What This Demonstrates
-
-This application showcases:
-
-1. **Complete CRUD Operations**: All four database operations with practical examples
-2. **Relationship Modeling**: Real foreign key implementation with cascade behavior
-3. **Query Complexity**: From simple SELECTs to JOINs and aggregates
-4. **Security Best Practices**: bcrypt hashing, parameterized queries
-5. **Modern Architecture**: Separation of concerns, REST principles
-6. **Production Patterns**: Error handling, input validation, connection pooling
-
 ## Development Commands
 
 ```bash
@@ -219,13 +208,6 @@ This application demonstrates several important database and software engineerin
 5. **Data Integrity**: Cascading deletes maintain referential integrity
 6. **Frontend Integration**: How HTTP requests translate to SQL queries
 
-Important considerations:
-
-- Parameterized queries prevent SQL injection attacks
-- Indexes improve query performance for frequently searched columns
-- Tradeoffs exist between normalization and query complexity
-- Transactions can ensure atomic operations for multi-step processes
-
 ## Example cURL Commands
 
 ```bash
@@ -242,19 +224,3 @@ curl -X PUT http://localhost:3000/api/tasks/1 \
   -H "Content-Type: application/json" \
   -d '{"completed": true}'
 ```
-
-## Potential Extensions
-
-This project can be extended with additional features:
-
-- JWT authentication with refresh tokens
-- Pagination and sorting for large task lists
-- Task categories with many-to-many relationships
-- Full-text search using MySQL FULLTEXT indexes
-- Task sharing and collaboration features
-- Soft deletes with archived tasks
-- Transaction examples for atomic operations
-
-## About
-
-Created as an educational demonstration for CS4604 (Introduction to Database Management Systems). This project illustrates fundamental database concepts through a practical, full-stack application.
